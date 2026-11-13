@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>温音ミカン - UTAU音源公式サイト</title>
+    <style>
+        :root {
+            --primary-color: #ff7f00;
+            --accent-color: #ffa500;
+            --bg-color: #fffaf0;
+            --text-color: #333333;
+            --card-bg: #ffffff;
+        }
+
+        body.en {
+            --title-main: "ONNE MIKAN";
+            --sub-title: "UTAU Voicebank Official Website";
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Helvetica Neue', Arial, 'Hiragino Kaku Gothic ProN', Meiryo, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Notice Banner */
+        .notice-banner {
+            background-color: #ff4500;
+            color: white;
+            text-align: center;
+            padding: 10px 15px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 1000;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header-controls {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .lang-btn {
+            background: white;
+            color: var(--primary-color);
+            border: none;
+            padding: 6px 12px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: bold;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: transform 0.2s;
+        }
+
+        .lang-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .lang-btn img {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Navigation */
+        nav {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            padding: 10px;
+            gap: 15px;
+        }
+
+        nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s;
+        }
+
+        nav a:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+
+        /* Sections */
+        section {
+            background: var(--card-bg);
+            margin-bottom: 30px;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 8px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2 img {
+            width: 28px;
+            height: 28px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        /* Profile Layout */
+        .profile-content {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        @media (min-width: 600px) {
+            .profile-content {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+        }
+
+        .profile-image-container {
+            flex-shrink: 0;
+            text-align: center;
+        }
+
+        .profile-image {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid var(--primary-color);
+            background-color: #eee;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .profile-image-note {
+            font-size: 0.8rem;
+            color: #777;
+            margin-top: 5px;
+        }
+
+        .profile-details {
+            flex-grow: 1;
+        }
+
+        .profile-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .profile-table th, .profile-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #eee;
+            text-align: left;
+        }
+
+        .profile-table th {
+            width: 30%;
+            color: #555;
+            font-weight: 600;
+        }
+
+        /* Download Button */
+        .download-box {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+            color: white;
+            padding: 14px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(255, 127, 0, 0.4);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 127, 0, 0.6);
+        }
+
+        /* Links / Social List */
+        .link-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .link-list li a {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 18px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid #e9ecef;
+            transition: background-color 0.2s, transform 0.2s;
+        }
+
+        .link-list li a:hover {
+            background-color: #fff3e0;
+            border-color: var(--primary-color);
+            transform: translateX(5px);
+        }
+
+        .link-list img {
+            width: 24px;
+            height: 24px;
+            object-fit: contain;
+        }
+
+        /* Terms of Use Box */
+        .terms-box {
+            max-height: 250px;
+            overflow-y: auto;
+            background: #fafafa;
+            border: 1px solid #ddd;
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 0.9rem;
+            margin-bottom: 15px;
+            white-space: pre-line;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #777;
+            font-size: 0.9rem;
+            background-color: #f1f3f5;
+            margin-top: 50px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8rem;
+            }
+            section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 注意喚起バナー -->
+    <div class="notice-banner">
+        【注意】公式アカウントはXにしかありません。ほかのネット、プラットフォームのなりすましに注意！
+    </div>
+
+    <!-- ヘッダー -->
+    <header>
+        <div class="header-controls">
+            <button class="lang-btn" onclick="toggleLanguage()" id="langToggleBtn">
+                <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" alt="X icon"> <span id="langText">English</span>
+            </button>
+        </div>
+        <h1 id="site-title">温音ミカン</h1>
+        <p id="site-subtitle">UTAU音声ライブラリ 公式サイト / Official Website</p>
+    </header>
+
+    <!-- ナビゲーション -->
+    <nav>
+        <a href="#profile" data-ja="キャラ設定" data-en="Profile">キャラ設定</a>
+        <a href="#download" data-ja="音源ダウンロード" data-en="Download">音源ダウンロード</a>
+        <a href="#terms" data-ja="利用規約" data-en="Terms">利用規約</a>
+        <a href="#privacy" data-ja="プライバシーポリシー" data-en="Privacy Policy">プライバシーポリシー</a>
+        <a href="#links" data-ja="リンク" data-en="Links">リンク</a>
+    </nav>
+
+    <!-- メインコンテンツ -->
+    <div class="container">
+
+        <!-- キャラ設定セクション -->
+        <section id="profile">
+            <h2>
+                <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" alt="X Icon">
+                <span data-ja="キャラ設定" data-en="Character Profile">キャラ設定</span>
+            </h2>
+            <div class="profile-content">
+                        
+                <div class="profile-details">
+                    <table class="profile-table">
+                        <tr>
+                            <th data-ja="名前" data-en="Name">名前</th>
+                            <td>温音ミカン</td>
+                        </tr>
+                        <tr>
+                            <th data-ja="由来" data-en="Origin">由来</th>
+                            <td data-ja="ただ単に温州みかんがうまかったから擬人化したくなっただけ" data-en="Just wanted to personify Satsuma mandarin oranges because they were delicious.">ただ単に温州みかんがうまかったから擬人化したくなっただけ</td>
+                        </tr>
+                        <tr>
+                            <th data-ja="持ち物" data-en="Item">持ち物</th>
+                            <td data-ja="みかん" data-en="Mandarin orange">みかん</td>
+                        </tr>
+                        <tr>
+                            <th data-ja="お酒" data-en="Alcohol">お酒</th>
+                            <td data-ja="飲まない" data-en="Doesn't drink">飲まない</td>
+                        </tr>
+                        <tr>
+                            <th data-ja="年齢" data-en="Age">年齢</th>
+                            <td data-ja="15才" data-en="15 years old">15才</td>
+                        </tr>
+                        <tr>
+                            <th data-ja="服装" data-en="Outfit">服装</th>
+                            <td data-ja="制服にボカロ要素を付け加えたもの" data-en="School uniform with Vocaloid elements added">制服にボカロ要素を付け加えたもの</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ダウンロードセクション -->
+        <section id="download">
+            <h2><span data-ja="音源ダウンロード" data-en="Download Voicebank">音源ダウンロード</span></h2>
+            <div class="download-box">
+                <p style="margin-bottom: 20px;" data-ja="下のボタンからGoogleドライブにて音源のzipファイルをダウンロードできます。" data-en="You can download the zip file of the voicebank from Google Drive using the button below.">下のボタンからGoogleドライブにて音源のzipファイルをダウンロードできます。</p>
+                <a href="https://drive.google.com/drive/folders/1uiUsOglkY19cVVXqnetSEsaodDJXeVFT" target="_blank" class="btn" data-ja="Googleドライブでダウンロード" data-en="Download from Google Drive">Googleドライブでダウンロード</a>
+            </div>
+        </section>
+
+        <!-- 利用規約セクション -->
+        <section id="terms">
+            <h2><span data-ja="利用規約" data-en="Terms of Use">利用規約</span></h2>
+            <div class="terms-box">UTAU音源利用規約
+
+この利用規約は、「温音ミカン」（以下「本音源」）の利用条件を定めるものです。本音源を使用される場合は、本規約に同意したものとみなします。
+
+1. 基本事項
+- 音源名: 温音ミカン
+- 中の人・配布者: MIKANEKO
+- 配布場所: Google drive
+
+2. 許可されていること（商用・非商用）
+- カバー曲・オリジナル曲の制作: 本音源を使用した歌唱動画や楽曲の公開。
+- メディア展開: ニコニコ動画、YouTube、SNS等への投稿、および同人CD等への収録。
+- 調整・改変: 音源の原音設定（oto.ini）の調整や、ピッチ・フラグ等の調声。
+- イラスト・動画等での二次創作: 本音源のキャラクター設定に沿ったイラスト、MMDモデル、動画等の制作（※キャラクター設定がある場合）。
+
+3. 禁止事項
+- 自作発言・無断転載: 本音源のファイル自体の無断転載、および自分が権利者であると偽る行為。
+- 公序良俗に反する利用: 政治・宗教活動、暴力的な表現、過度な性描写、特定の個人・団体を誹謗中傷する目的での利用。
+- 権利侵害: 他者の著作権や知的財産権を侵害する行為。
+- 悪質な改変: 音源の声を極端に歪めるなど、キャラクターや中の人のイメージを著しく損なう利用。
+
+4. 免責事項
+- 本音源の利用によって生じたいかなるトラブルや損害について、配布者は一切の責任を負いません。
+- 規約の内容は予告なく変更・改定される場合があります。
+
+5. クレジット表記について
+- 動画や作品内で本音源を使用する際は、可能な限り「音源名（温音ミカン）」および「配布者名（MIKANEKO）」を記載してください。（例：Vocal / 温音ミカン by MIKANEKO）</div>
+        </section>
+
+        <!-- プライバシーポリシーセクション -->
+        <section id="privacy">
+            <h2><span data-ja="プライバシーポリシー" data-en="Privacy Policy">プライバシーポリシー</span></h2>
+            <p style="margin-bottom: 10px;" data-ja="当サイトでは、アクセス解析やサービスの利便性向上等の目的でCookie等を使用する場合がありますが、個人を特定する目的では使用いたしません。お問い合わせ等で取得した個人情報は、適切に管理し、目的外の利用はいたしません。" data-en="This site may use Cookies for access analysis and service improvement, but does not use them to identify individuals. Personal information acquired through inquiries will be managed appropriately and will not be used for unintended purposes.">当サイトでは、アクセス解析やサービスの利便性向上等の目的でCookie等を使用する場合がありますが、個人を特定する目的では使用いたしません。お問い合わせ等で取得した個人情報は、適切に管理し、目的外の利用はいたしません。</p>
+        </section>
+
+        <!-- リンク・SNSセクション -->
+        <section id="links">
+            <h2><span data-ja="リンク・公式アカウント" data-en="Links & Official Accounts">リンク・公式アカウント</span></h2>
+            <ul class="link-list">
+                <li>
+                    <a href="https://x.com/ONNEMIKAN" target="_blank">
+                        <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" alt="X icon">
+                        <div>
+                            <span data-ja="温音ミカンおふいしゃる (X)" data-en="Onne Mikan Official (X)">温音ミカンおふいしゃる (X)</span>
+                            <div style="font-size: 0.8rem; color: #666;">https://x.com/ONNEMIKAN</div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://x.com/nna143324196858" target="_blank">
+                        <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" alt="X icon">
+                        <div>
+                            <span data-ja="Xのブログ" data-en="X Blog ">Xのブログ</span>
+                            <div style="font-size: 0.8rem; color: #666;">https://x.com/nna143324196858</div>
+                        </div>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://x.com/soutuimeto" target="_blank">
+                        <img src="https://abs.twimg.com/icons/apple-touch-icon-192x192.png" alt="X icon">
+                        <div>
+                            <span data-ja="音源管理者アカウント" data-en="Voicebank Manager Account">温音ミカンの音源管理者</span>
+                            <div style="font-size: 0.8rem; color: #666;">https://x.com/soutuimeto</div>
+                        </div>
+                    </a>
+                </li>
+            </ul>
+        </section>
+
+    </div>
+
+    <!-- フッター -->
+    <footer>
+        <p>&copy; 2026 温音ミカン Official Website. All Rights Reserved.</p>
+    </footer>
+
+    <!-- スクロールアニメーション & 英語切り替えスクリプト -->
+    <script>
+        // スクロール時のふわっと表示 (Intersection Observer)
+        document.addEventListener("DOMContentLoaded", function() {
+            const sections = document.querySelectorAll("section");
+            
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            sections.forEach(section => {
+                observer.observe(section);
+            });
+        });
+
+        // 英語切替機能
+        let isEnglish = false;
+        function toggleLanguage() {
+            isEnglish = !isEnglish;
+            document.body.classList.toggle('en', isEnglish);
+            
+            // ボタン表示変更
+            const langText = document.getElementById('langText');
+            if (isEnglish) {
+                langText.textContent = '日本語';
+            } else {
+                langText.textContent = 'English';
+            }
+
+            // data-ja / data-en の差し替え
+            const elements = document.querySelectorAll('[data-ja]');
+            elements.forEach(el => {
+                if (isEnglish) {
+                    if(el.dataset.en) el.textContent = el.dataset.en;
+                } else {
+                    if(el.dataset.ja) el.textContent = el.dataset.ja;
+                }
+            });
+        }
+    </script>
+</body>
+</html>
